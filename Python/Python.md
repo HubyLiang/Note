@@ -330,3 +330,78 @@ Traceback (most recent call last):
 NameError: name 'a' is not defined
 >>>
 ```
+
+#### 6. 数据结构
+1. 概念   
+提供一种结构，能将一些数据聚合在一起。
+2. 4种内置数据结构  
+列表List，元组Tuple，字典DIctionary，集合Set  
+
+   1. **列表 List**   
+    列表List用于保存一系列有序项目的集合。即，我们可以利用列表保存一串项目的序列。    
+    项目的列表u应该用 **[]** 括起来，一旦我们创建了一张列表，我们就可以添加、移除或者搜索列表中的项目。  
+    即，列表List 是**可变的**。  
+    **列表是使用对象与类的实例**。当我们创建一个变量 i 并将整数 5 赋值给它，我们可以认为这个过程实在创建了一个 int 类的对象实例。
+    ```python
+    # 购物列表
+    shoplist = ["apple","mango","carrot","banana"]
+
+    print("I've",len(shoplist),"items to purchase")
+
+    print("These items are:",end=" ")
+    for item in shoplist:
+        print(item,end=" ")
+
+    print("\n-------------------------")
+
+    print("I also have buy rice.")
+    shoplist.append("rice")
+    print("My shopping list is now",shoplist)
+
+    print("-------------------------")
+
+    print("I'll sort my list now.",)
+    # 影响的是列表本身，而不是返回一个修改过的列表
+    shoplist.sort()
+    print("Sorted shopping list is",shoplist)
+    shoplist.sort(reverse=True)
+    print("Sorted shopping list is",shoplist)
+
+    print("-------------------------")
+
+    print("The first item I will buy is ",shoplist[0])
+    olditem = shoplist[0]
+    del shoplist[0]
+    print("I bought the ",olditem)
+    print("My shopping list is now",shoplist)
+    ```
+   2. **元组 Tuple**  
+   元组是用于将多个对象保存在一起。可以近似的看作为列表List，但元组不能提供列表类所提供的丰富的方法功能，因为**元组是不可变的**。我们不能编辑或者更改元组。    
+   元组是通过特别指定项目来定义的。使用 () 来定义元组，中间通过逗号进行分割。  
+   元组通常用于保证某一语句或用户定义的函数可以安全的采用一组数值，即 **元组内的数值不会改变**.    
+   注意：  
+   包含 0个或1个 项目的元组。
+   ```python
+   # 一个空的元组使用一对 ()
+   myempty = ()
+   # 只包含一个项目的元组必须在第一个项目(也是唯一一个)后面加上一个 ','  
+   singleton = (1,)
+   ```
+
+   ```python
+   # 明了胜于晦涩,显示优于隐式
+   # 推荐使用 () 声明元组
+   zoo = ("python","elephant","penguin")
+   print("Number of animals in the zoo",len(zoo))
+
+   new_zoo = ("monkey","camel",zoo)
+   print("Number of cages in the new_zoo is",len(new_zoo))
+   print("All number in new_zoo are",new_zoo)
+
+   # 索引 index 从0 开始.类似于数组.
+   print("Animals brought from old zoo are",new_zoo[2])
+   print("Last animal brought from old zoo is",new_zoo[2][2])
+   print("Number of animals in the new zoo is",len(new_zoo)-1+len(new_zoo[2]))
+   ```  
+   3. **字典 Dictionary**  
+   字典就像一本地址薄，如果你知道了他的姓名，就可以在字典中找到其地址或者能够联系上对方的更多的详细信息。简单的来说，就是我们将键(Keys)和值(Values)联系到一起。(就是Java中的HashMap) 注意的是，**键必须是唯一的**.此外，只能使用不可变对象(如字符串)作为字典的键。
