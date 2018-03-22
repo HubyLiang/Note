@@ -405,3 +405,79 @@ NameError: name 'a' is not defined
    ```  
    3. **字典 Dictionary**  
    字典就像一本地址薄，如果你知道了他的姓名，就可以在字典中找到其地址或者能够联系上对方的更多的详细信息。简单的来说，就是我们将键(Keys)和值(Values)联系到一起。(就是Java中的HashMap) 注意的是，**键必须是唯一的**.此外，只能使用不可变对象(如字符串)作为字典的键。
+   ```python
+   # ab 是 Address 和 Book 的缩写
+
+   ab = {
+       "Sam": "sam@gmail.com",
+       "Tom": "tom@gmail.com",
+       "Spammer": "Spammer@gmail.com"
+   }
+
+   print("Sam's address is",ab['Sam'])
+
+   # 删除一对键值对
+   del ab["Spammer"]
+
+   print("\nThere are {} contacts in the address-book\n".format(len(ab)))
+
+   for name, address in ab.items():
+       print("Contact {} at {}".format(name,address))
+
+   # 添加一对键值对
+   ab["Jackson"] = "jackson@gmail.com"
+
+   if "Jackson" in ab:
+       print("\nJackson's address is",ab["Jackson"])
+   else:
+       print("\nnothing found")
+   ```
+   小总结:  
+   添加: dic["key"] = "Value"  
+   删除: del dic["key"]  
+   遍历: for filed in dic.items():  
+
+   4. **序列 Sequence**  
+   **列表,元组和字符串可以看作序列的某种表现形式** ,序列的主要功能就是资格测试(Membership Test)(也就是 in 与 not in 表达式)和索引操作(indexing operations),它们能允许我们直接获取序列中的特定呢项目.  
+   序列的三种形态---列表,元组和字符串,都拥有一种 **切片运算符(Slicing)**, 它允许我们获取序列中的某段切片.  
+   Python从0开始计数,从头到尾计数; 当使用负数时,从末尾开始向前计数,最后一位是 -1. 我们可以指定序列名称来进行序列操作,序列名称后可以跟一对方括号,注意:**方括号中数字是可选项，但是冒号是必选项**    
+   **list[1:3]**  注意: **包含list[1],list[2] 但是不包含list[3]**  包首不包尾  
+   切片操作会在开始处返回 start，并在 end 前面的位置结束工作。也就是说，序列切片将包括起始位置，但不包括结束位置。  
+   切片操作的第三个参数为步长 step,默认为1
+
+   ```python
+   shoplist = ['apple','mango','carrot','banana']
+   name = 'tomcat'
+
+   # 索引下标操作符--Subscription
+   print('Item 0 is',shoplist[0])  # apple
+   print('Item 1 is',shoplist[1])  # mango
+   print('Item 2 is',shoplist[2])  # carrot
+   print('Item -1 is',shoplist[-1])  # banana
+   print('Item -2 is',shoplist[-2])  # carrot
+   print('Item -3 is',shoplist[-3])  # mango
+
+   # Slicing on a list
+   print("Item 1 to 3 is",shoplist[1:3])  # mango carrot
+   print("Item 2 to end is",shoplist[2:])  # carrot banana
+   print("Item 1 to -1 is",shoplist[1:-1]) # mango carrot
+   print("Item start to end is",shoplist[:]) #
+
+   # 从某一字符串中切片
+   print("characters 1 to 3 is",name[1:3])   # om
+   print("characters 2 to end is",name[2:])  # mcat
+   print("characters 1 to -1 is",name[1:-1]) # omca
+   print("characters start to end is",name[:])  # tomcat
+   ```
+   ```python
+   >>> shoplist = ["apple","mango","carrot","banana"]
+   >>> shoplist[::1]
+   ['apple', 'mango', 'carrot', 'banana']
+   >>> shoplist[::2]
+   ['apple', 'carrot']
+   >>> shoplist[::-1]
+   ['banana', 'carrot', 'mango', 'apple']
+   ```
+   5. **集合 Set**
+   集合Set是简单对象的无序集合(Collection),当集合中的项目存在与否比起次序或出现次数更加重要时,我们就会使用集合Set.  
+   通过使用集合我们可以测试某些对象的资格情况,检查它们是否是其他集合的自己,找到两个集合的交集等等.
