@@ -481,3 +481,55 @@ NameError: name 'a' is not defined
    5. **集合 Set**
    集合Set是简单对象的无序集合(Collection),当集合中的项目存在与否比起次序或出现次数更加重要时,我们就会使用集合Set.  
    通过使用集合我们可以测试某些对象的资格情况,检查它们是否是其他集合的自己,找到两个集合的交集等等.
+   ```python
+    >>> bri = set(['brazil','russia','india'])  # 使用set()函数创建Set类型的数据结构,传入的是一个List对象
+    >>> 'india' in bri
+    True
+    >>> 'usa' in bri
+    False
+    >>> bric = bri.copy()
+    >>> bric.add('china')
+    >>> bric.issuperset(bri)
+    True
+    >>> bri.remove('russia')
+    >>> bri & bric
+    {'brazil', 'india'}  #
+    >>> bri.intersection(bric)
+    {'brazil', 'india'}
+    >>> set("python")
+    {'y', 'p', 't', 'h', 'o', 'n'}
+   ```
+   6. 引用   
+   当我们创建了一个对象并将其分配给某个变量时,变量只会查阅(Refer)某个对象,并且它也不会代表对象本身.即变量只是指向你计算机内存中存储了相应对象的那一部分内存地址.名词:名称绑定(Binding)给那个对象.    
+   ```python
+   print("Simple Assigiment")
+   shoplist = ["apple","mango","carrot","banana"]
+
+   # mylist 只是指向同一对象的另一种名称
+   mylist = shoplist
+
+   # 将购物列表中的第一项移除
+   del shoplist[0]
+
+   print("shoplist is",shoplist)
+   print("mylist is",mylist)
+   # 两者指向同一个引用对象
+
+   print("Copy by making a full slice")
+   mylist = shoplist[:]
+   # 删除第一项
+   del mylist[0]
+
+   print("shoplist is",shoplist)
+   print("mylist is",mylist)
+   # 两者指向不同的引用
+
+
+   Simple Assigiment
+   shoplist is ['mango', 'carrot', 'banana']
+   mylist is ['mango', 'carrot', 'banana']
+   Copy by making a full slice
+   shoplist is ['mango', 'carrot', 'banana']
+   mylist is ['carrot', 'banana']
+   ```
+   7. 关于字符串的更多内容
