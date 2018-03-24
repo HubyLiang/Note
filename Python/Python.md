@@ -533,3 +533,192 @@ NameError: name 'a' is not defined
    mylist is ['carrot', 'banana']
    ```
    7. 关于字符串的更多内容
+   在程序中使用的字符串都是str类下的对象.  
+   **find 方法**用于定位字符串中给定的子字符串的位置,如果找不到,则返回-1; str类同样还拥有一个简洁的方法用以 **联结(Join)** 序列中的项目,其中字符串将会作为每一项目之间的分隔符,并以此返回一串更大的字符串.   
+   ```python
+   # 这是一个字符串对象
+    name = "Swaroop"
+
+    if name.startswith("Swa"):
+        print("Yes,the string starts with 'Swa'")
+
+    if "a" in name:
+        print("Yes,it contains the string 'a' ")
+
+    if name.find("war") != -1:
+        print("Yes,it contains the String 'war' ")
+
+    delimiter = '_*_'
+    mylist = ["Brazil","Russia","India","China"]
+    print(delimiter.join(mylist))
+   ```
+#### 7.程序设计
+1. 希望解决的问题  
+想要一款程序来备份我的所有重要文件.  
+2. 问题分析  
+如何指定哪些文件是我们需要备份的?  
+应该如何进行备份?  
+储存到哪里?  
+3. Design  
+运转清单列表:  
+    1. 需要备份的文件与目录在应该在一份列表中指明.  
+    2. 备份必须存储在一个主备份目录中.  
+    3. 备份文件将打包压缩成zip文件.  
+    4. zip压缩文件的文件名由当前日期和时间构成.
+    5. 使用GUN/Linux 提供的标准zip命令打包.  
+4. 实现代码  
+    1. 第一版
+    ```python
+    # source = ['"D:\\MyDocuments"','"D:\\Code"']
+    # 在Linux下:
+    # source = ['/user/']
+
+    source = ["D:\\temp\\old"]
+
+    # 2. 备份文件必须存储在一个主备份目录中
+    target_dir = "D:\\temp\\new"
+
+    # 3. 将备份文件打包成zip文件
+    # 4. zip压缩文件名由当前日期与时间构成
+    target = target_dir + os.sep + \
+             time.strftime("%Y%m%d%H%M%S") + ".zip"
+
+    # 如果目标目录不存在,则进行创建
+    if not os.path.exists(target_dir):
+        os.mkdir(target_dir) # 创建目录
+
+    # 5. 我们使用zip命令将文件打包成zip格式
+    zip_command = "zip -r {0} {1}".format(target, " ".join(source))
+
+    # 运行备份
+
+    print("Zip command is:")
+    print(zip_command)
+    print("Running:")
+    if os.system(zip_command) == 0:
+        print("Successful backup fo",target)
+    else:
+        print("Backup FAILED")
+    ```
+    2. 第二版
+    程序大部分保持不变,改变的部分是通过 os.path.exists() 函数来检查主文件目录中是否已经存在了当前日期作为名称的子目录.如果尚未存在,则通过 os.mkdir()函数创建一个.
+    ```python
+    import os
+    import time
+
+    # 1. 备份的目标文件与目录
+    source = ["D:\\temp\\old"]
+
+    # 2, 备份路径
+    target_dir = "D:\\temp\\new"
+
+    # 如果目标目录不存在,则创建
+    if not os.path.exists(target_dir):
+        os.mkdir(target_dir)
+
+    # 3. 备份文件打包成zip文件
+    # 4. 将当前日期作为主备份目录下的子目录名称
+    today = target_dir + os.sep + time.strftime("%Y%m%d")
+
+    # 将当前时间作为zip文件的文件名
+    now = time.strftime("%H%M%S")
+
+    # zip 文件名称格式
+    target = today + os.sep + now + ".zip"
+
+    # 如果子目录不存在则创建一个
+    if not os.path.exists(today):
+        os.mkdir(today)
+        print("Successfully created directory",today)
+
+    # 5. 使用zip命令将文件打包成zip格式
+    zip_command = "zip -r {0} {1}".format(target, ' '.join(source))
+
+    # 运行备份
+    print("Zip command is:")
+    print(zip_command)
+
+    print("Running:")
+    if os.system(zip_command) == 0:
+        print("Successful backup to",target)
+    else:
+        print("Backup FAILED")
+    ```
+    3. 第三版
+    ```python
+    import os
+    import time
+
+    # 1. 将需要备份的文件和目录将被指定在一个列表中
+    source = ["D:\\temp\\old"]
+
+    # 2. 备份文件必须存储在一个主备份目录中
+    target_dir = "D:\\temp\\new"
+
+    # 如果这个目录不存在,则进行创建
+    if not os.path.exists("D:\\temp\\new"):
+        os.mkdir("D:\\temp\\new")
+
+    # 3. 备份文件将打包成zip文件
+    # 4. 将当前日期作为主备份目录下的子备份目录名称
+    today = target_dir + os.sep + time.strftime("%Y%m%d")
+
+    # 将当前时间作为zip文件的文件名
+    now = time.strftime("%H%M%S")
+
+    # 添加一条来自用户的注视用来创建zip 文件的文件名
+    comment = input("请输入文件名:")
+
+    # 检查是否由评论键入
+    if len(comment) == 0:
+        target = today + os.sep + now + ".zip"
+    else:
+        target = today + os.sep + now + "_" + comment.replace(" ", "_") + ".zip"
+
+    # 如果子目录不存在,则创建一个
+    if not os.path.exists(today):
+        os.mkdir(today)
+        print("Successfully created directory", today)
+
+    # 5. 我们使用zip命令将需要备份的文件和目录打包成 zip 格式
+    zip_command = "zip -r {0} {1}".format(target, " ".join(source))
+
+    # 运行备份
+    print("Zip command is:")
+    print(zip_command)
+    print("Running:")
+
+    if os.system(zip_command) == 0:
+        print("Successful backup to",target)
+    else:
+        print("Backup FAILED")
+    ```
+
+5. 软件开发流程  
+阶段总结:  
+   1. What/做什么(分析)
+   2. How/怎么做(设计)
+   3. Do it/开始做(执行)
+   4. Test/测试(测试与修复错误)
+   5. Use/使用(操作与开发)
+   6. Maintain/维护(改进)  
+   编写程序遵循的步骤: 进行分析与设计;开始实现一个简单的版本;测试与修复错误;开始使用以确保工作情况如期望那般; 如果需要添加新功能,则重复 "开始做---测试---使用"循环.  
+   Software is grown,not built
+
+#### 8.面向对象编程
+将数据与功能进行组合,并将其包装在"对象"中,即面向对象编程.  
+1. self  
+类方法和普通方法只有一种特定的区别 --- 类方法必须多加一个参数在参数列表开头.这个特定的变量引用的是对象本身,即被赋予self这一名称.(self 相当于Java中的this引用)  
+例如:  
+一个MyClass的类,这个类下有一个实例myobject. 当我们调用一个这个对象的方法,例如 myobject.method(arg1,arg2)时,Python就会自动将其装换成 MyClass.method(myobject , arg1 , arg2). 这就是self的全部特殊之处.    
+2. 类 class
+一个最简单的类:  
+通过使用 class 语句
+
+    ```python
+    class Person:
+        pass  # 空代码块
+
+    p = Person()
+    print(p)
+    ```
